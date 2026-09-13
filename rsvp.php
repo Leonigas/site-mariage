@@ -101,6 +101,20 @@ try {
         PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
     ]);
 
+    // Crée la table si elle n'existe pas encore (aucune étape manuelle nécessaire)
+    $pdo->exec(
+        'CREATE TABLE IF NOT EXISTS rsvp_responses (
+            id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+            created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+            name VARCHAR(200) NOT NULL,
+            email VARCHAR(200) NOT NULL,
+            attending VARCHAR(100) NOT NULL,
+            plus_one VARCHAR(200) NOT NULL DEFAULT \'\',
+            meal VARCHAR(100) NOT NULL DEFAULT \'\',
+            message TEXT NULL
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4'
+    );
+
     $stmt = $pdo->prepare(
         'INSERT INTO rsvp_responses (name, email, attending, plus_one, meal, message)
          VALUES (:name, :email, :attending, :plus_one, :meal, :message)'
