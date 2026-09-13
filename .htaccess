@@ -5,3 +5,9 @@
 <Files "mail_config.example.php">
     Require all denied
 </Files>
+<Files "db_config.php">
+    Require all denied
+</Files>
+<Files "db_config.example.php">
+    Require all denied
+</Files>

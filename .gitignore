@@ -1,2 +1,3 @@
-# Ne JAMAIS committer les identifiants SMTP réels
+# Ne JAMAIS committer les identifiants réels
 mail_config.php
+db_config.php

@@ -21,13 +21,9 @@ require __DIR__ . '/vendor/PHPMailer/src/SMTP.php';
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception as PHPMailerException;
 
-// Config SMTP : fichier volontairement hors du dépôt Git (voir mail_config.example.php)
-// ET hors du dossier public (webroot), pour qu'il ne soit jamais accessible par une URL,
-// même en cas de mauvaise interprétation du .htaccess.
-// Placement attendu sur le serveur : un dossier au-dessus de celui qui contient rsvp.php,
-// ex. si rsvp.php est dans /home/xxx/public/rsvp.php, alors le fichier va dans
-// /home/xxx/mail_config.php
-$configPath = dirname(__DIR__) . '/mail_config.php';
+// Config SMTP : fichier volontairement hors du dépôt Git (voir mail_config.example.php).
+// Il doit être déposé manuellement sur le serveur, à côté de ce script.
+$configPath = __DIR__ . '/mail_config.php';
 if (!file_exists($configPath)) {
     http_response_code(500);
     echo json_encode(['ok' => false, 'error' => 'missing_config']);
@@ -85,7 +81,7 @@ if (!empty($errors)) {
 }
 
 // Destinataire final (fixe, on ne le laisse jamais venir du formulaire)
-$to = 'contact@mariage-kim-et-leo.fr';
+$to = 'leopold.guerin@gmail.com';
 $subject = 'RSVP - ' . $name;
 
 $bodyLines = [
