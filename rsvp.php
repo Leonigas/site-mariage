@@ -81,7 +81,7 @@ if (!empty($errors)) {
 }
 
 // Destinataire final (fixe, on ne le laisse jamais venir du formulaire)
-$to = 'leopold.guerin@gmail.com';
+$to = 'contact@mariage-kim-et-leo.fr';
 $subject = 'RSVP - ' . $name;
 
 $bodyLines = [

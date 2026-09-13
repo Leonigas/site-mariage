@@ -335,7 +335,7 @@ html{scroll-behavior:smooth}
   </div>
 </div>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props="{&quot;showCountdown&quot;: {&quot;editor&quot;: &quot;boolean&quot;, &quot;default&quot;: true, &quot;tsType&quot;: &quot;boolean&quot;, &quot;section&quot;: &quot;Comportement&quot;}, &quot;rsvpDeadline&quot;: {&quot;editor&quot;: &quot;text&quot;, &quot;default&quot;: &quot;1 juillet 2027&quot;, &quot;tsType&quot;: &quot;string&quot;, &quot;section&quot;: &quot;RSVP&quot;}, &quot;rsvpRecipientEmail&quot;: {&quot;editor&quot;: &quot;text&quot;, &quot;default&quot;: &quot;leopold.guerin@gmail.com&quot;, &quot;tsType&quot;: &quot;string&quot;, &quot;section&quot;: &quot;RSVP&quot;}, &quot;invitationPdfUrl&quot;: {&quot;editor&quot;: &quot;text&quot;, &quot;default&quot;: &quot;&quot;, &quot;tsType&quot;: &quot;string&quot;, &quot;section&quot;: &quot;Faire-part&quot;}}">
+<script type="text/x-dc" data-dc-script data-props="{&quot;showCountdown&quot;: {&quot;editor&quot;: &quot;boolean&quot;, &quot;default&quot;: true, &quot;tsType&quot;: &quot;boolean&quot;, &quot;section&quot;: &quot;Comportement&quot;}, &quot;rsvpDeadline&quot;: {&quot;editor&quot;: &quot;text&quot;, &quot;default&quot;: &quot;1 juillet 2027&quot;, &quot;tsType&quot;: &quot;string&quot;, &quot;section&quot;: &quot;RSVP&quot;}, &quot;rsvpRecipientEmail&quot;: {&quot;editor&quot;: &quot;text&quot;, &quot;default&quot;: &quot;contact@mariage-kim-et-leo.fr&quot;, &quot;tsType&quot;: &quot;string&quot;, &quot;section&quot;: &quot;RSVP&quot;}, &quot;invitationPdfUrl&quot;: {&quot;editor&quot;: &quot;text&quot;, &quot;default&quot;: &quot;&quot;, &quot;tsType&quot;: &quot;string&quot;, &quot;section&quot;: &quot;Faire-part&quot;}}">
 class Component extends DCLogic {
   state = {
     name: '', email: '', attending: 'Les deux jours', bringingPlusOne: false, plusOneName: '', meal: 'Sans préférence', message: '',
@@ -471,7 +471,7 @@ class Component extends DCLogic {
   }
 
   renderVals() {
-    const recipient = this.props.rsvpRecipientEmail ?? 'leopold.guerin@gmail.com';
+    const recipient = this.props.rsvpRecipientEmail ?? 'contact@mariage-kim-et-leo.fr';
     const pdfUrl = this.props.invitationPdfUrl ?? '';
     const s = this.state;
     return {
