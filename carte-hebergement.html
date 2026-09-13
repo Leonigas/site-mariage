@@ -3,46 +3,12 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha384-sHL9NAb7lN7rfvG5lfHpm643Xkcjzp4jFvuavGOndn6pjVqS6ny56CAt3nsEVT4H" crossorigin="anonymous">
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha384-cxOPjt7s7Iz04uaHJceBmS+qpjv2JkIHNVcuOrM+YHwZOmJGBXI00mdUXEq65HTH" crossorigin="anonymous"></script>
 <style>
-  html,body{margin:0;padding:0;height:100%;font-family:"Public Sans",system-ui,sans-serif}
-  #map{width:100%;height:100%}
-  .leaflet-popup-content{font-size:13.5px;line-height:1.4}
-  .leaflet-popup-content b{font-family:"Instrument Serif",Georgia,serif;font-size:16px}
+  html,body{margin:0;padding:0;height:100%}
+  iframe{width:100%;height:100%;border:0;display:block}
 </style>
 </head>
 <body>
-<div id="map"></div>
-<script>
-  const venue = [45.4926, 6.0224];
-  const places = [
-    { name: "Le Clos de Florie — lieu de la fête", desc: "Appartement meublé sur le domaine, contact : brigitteguillot01@gmail.com", coords: venue, kind: "venue" },
-    { name: "Camping la Ferme du Lac", desc: "Les Marches — ouvert du 15 avril au 30 septembre, 04 79 28 13 48", coords: [45.4890, 6.0290], kind: "camping" },
-    { name: "Family Camping", desc: "Challes-les-Eaux — family-camping-le-savoy.com", coords: [45.5477, 6.0092], kind: "camping" },
-    { name: "Montmélian", desc: "Hôtels à 9 km du Clos de Florie", coords: [45.4967, 6.0567], kind: "hotel" },
-    { name: "Challes-les-Eaux", desc: "Hôtels à 10 km du Clos de Florie", coords: [45.5490, 6.0130], kind: "hotel" },
-    { name: "Barberaz", desc: "Hôtels à 11 km du Clos de Florie", coords: [45.5619, 5.9375], kind: "hotel" },
-    { name: "La Castanea", desc: "Chambre d'hôte — Mme Grillet Hélène, 06 03 37 63 96, lacastanea38@gmail.com", coords: [45.4300, 6.0150], kind: "chambre" },
-    { name: "Les Tilleuls — Chambre d'hôte et Gîte", desc: "121 avenue de Grenoble, 38530 Chapareillan — 06 26 99 69 82", coords: [45.4145, 5.9895], kind: "chambre" },
-    { name: "Gîtes Les Chaudannes", desc: "Valgelon-la-Rochette — 06 71 36 49 76, brosset73@gmail.com", coords: [45.4014, 6.0965], kind: "gite" },
-    { name: "Le Cellier Spa — nuit de noces", desc: "Maison d'hôte avec espace bien-être privatif — tiffany@lecellierspa.fr, 06 76 20 68 25", coords: [45.4386, 5.9500], kind: "special" }
-  ];
-
-  const colors = { venue: "#801328", hotel: "#801328", camping: "#a52f42", chambre: "#cc5e6e", gite: "#cc5e6e", special: "#650f20" };
-
-  const map = L.map('map', { scrollWheelZoom: false }).setView(venue, 11);
-  L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-    maxZoom: 18
-  }).addTo(map);
-
-  places.forEach(p => {
-    const radius = p.kind === 'venue' ? 10 : 7;
-    L.circleMarker(p.coords, {
-      radius, color: '#fff', weight: 2, fillColor: colors[p.kind], fillOpacity: 1
-    }).addTo(map).bindPopup(`<b>${p.name}</b><br>${p.desc}`);
-  });
-</script>
+<iframe src="https://www.google.com/maps?q=Le+Clos+de+Florie,1436+route+du+Gr%C3%A9sivaudan,73800+Porte-de-Savoie&z=11&output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
 </body>
 </html>

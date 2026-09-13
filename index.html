@@ -7,6 +7,13 @@
 </head>
 <body>
 <x-dc>
+<template id="__bundler_thumbnail" data-bg-color="#f8f1e4">
+  <svg viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg">
+    <rect width="1200" height="800" fill="#f8f1e4"/>
+    <text x="600" y="380" text-anchor="middle" font-family="serif" font-size="90" fill="#801328">Kim &amp; Léopold</text>
+    <line x1="450" y1="440" x2="750" y2="440" stroke="#801328" stroke-width="3"/>
+  </svg>
+</template>
 <helmet>
 <link rel="stylesheet" href="_ds/classical-30754182-3890-42bd-b6f7-e94e913aec44/styles.css">
 <script src="_ds/classical-30754182-3890-42bd-b6f7-e94e913aec44/_ds_bundle.js"></script>
@@ -43,6 +50,8 @@ html{scroll-behavior:smooth}
 @keyframes tooltipBob{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
 #music-tooltip{animation:tooltipBob 1.6s ease-in-out infinite}
 @media (prefers-reduced-motion: reduce){#music-btn{animation:none}#music-tooltip{animation:none}}
+
+image-slot::part(image){filter:saturate(0.9) brightness(1.05) contrast(0.94) sepia(0.05)}
 </style>
 </helmet>
 <section id="accueil" style="position:relative;background:var(--color-bg);overflow:hidden">
@@ -144,6 +153,9 @@ html{scroll-behavior:smooth}
     <figure class="plate" data-reveal style="margin:0;grid-column:span 1"><image-slot id="ambiance-1" shape="rect" src="assets/nature-lights-table.avif" style="width:100%;aspect-ratio:3/4;object-fit:cover" placeholder="Photo"></image-slot></figure>
     <figure class="plate" data-reveal style="margin:0;grid-column:span 1;transform:translateY(-28px)"><image-slot id="ambiance-2" shape="rect" src="assets/nature-flowers.avif" style="width:100%;aspect-ratio:3/4;object-fit:cover" placeholder="Photo"></image-slot></figure>
     <figure class="plate" data-reveal style="margin:0;grid-column:span 1"><image-slot id="ambiance-3" shape="rect" src="assets/nature-tomatoes.avif" style="width:100%;aspect-ratio:3/4;object-fit:cover" placeholder="Photo"></image-slot></figure>
+    <figure class="plate" data-reveal style="margin:0;grid-column:span 1;transform:translateY(-14px)"><image-slot id="ambiance-4" shape="rect" style="width:100%;aspect-ratio:3/4;object-fit:cover" placeholder="Photo"></image-slot></figure>
+    <figure class="plate" data-reveal style="margin:0;grid-column:span 1"><image-slot id="ambiance-5" shape="rect" style="width:100%;aspect-ratio:3/4;object-fit:cover" placeholder="Photo"></image-slot></figure>
+    <figure class="plate" data-reveal style="margin:0;grid-column:span 1;transform:translateY(-28px)"><image-slot id="ambiance-6" shape="rect" style="width:100%;aspect-ratio:3/4;object-fit:cover" placeholder="Photo"></image-slot></figure>
   </div>
 </section>
 
@@ -160,48 +172,43 @@ html{scroll-behavior:smooth}
   <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:24px">
     <div class="card" data-reveal>
       <span class="card-kicker">Camping</span>
-      <h3 class="card-title">Camping la Ferme du Lac</h3>
+      <h3 class="card-title"><a href="https://maps.app.goo.gl/m54Txi2G18omSfZS9" target="_blank" rel="noopener">Camping la Ferme du Lac</a></h3>
       <p class="card-body">Les Marches — ouvert du 15 avril au 30 septembre. Tél : 04 79 28 13 48</p>
     </div>
     <div class="card" data-reveal>
-      <span class="card-kicker">Camping</span>
-      <h3 class="card-title">Family Camping</h3>
-      <p class="card-body">Challes-les-Eaux — family-camping-le-savoy.com</p>
-    </div>
-    <div class="card" data-reveal>
       <span class="card-kicker">Hôtels</span>
-      <h3 class="card-title">Montmélian, Challes-les-Eaux, Barberaz</h3>
+      <h3 class="card-title"><a href="https://www.google.com/maps/search/?api=1&amp;query=h%C3%B4tels%20Montm%C3%A9lian" target="_blank" rel="noopener">Montmélian, Challes-les-Eaux, Barberaz</a></h3>
       <p class="card-body">Plusieurs hôtels à 9-11 km du Clos de Florie.</p>
     </div>
     <div class="card" data-reveal>
       <span class="card-kicker">Chambre d'hôtes</span>
-      <h3 class="card-title">La Castanea</h3>
+      <h3 class="card-title"><a href="https://www.google.com/maps/search/?api=1&amp;query=La%20Castanea%20chambre%20d%27h%C3%B4te" target="_blank" rel="noopener">La Castanea</a></h3>
       <p class="card-body">Mme Grillet Hélène — 06 03 37 63 96 — lacastanea38@gmail.com — airbnb.com/h/lacastanea</p>
     </div>
     <div class="card" data-reveal>
       <span class="card-kicker">Chambre d'hôtes &amp; gîte</span>
-      <h3 class="card-title">Les Tilleuls</h3>
+      <h3 class="card-title"><a href="https://www.google.com/maps/search/?api=1&amp;query=121%20avenue%20de%20Grenoble%2C%2038530%20Chapareillan" target="_blank" rel="noopener">Les Tilleuls</a></h3>
       <p class="card-body">121 avenue de Grenoble, 38530 Chapareillan — 06 26 99 69 82 — lestilleuls-chapareillan.fr</p>
     </div>
     <div class="card" data-reveal>
       <span class="card-kicker">Gîtes</span>
-      <h3 class="card-title">Les Chaudannes</h3>
+      <h3 class="card-title"><a href="https://www.google.com/maps/search/?api=1&amp;query=Gîtes%20Les%20Chaudannes%20Valgelon-la-Rochette" target="_blank" rel="noopener">Les Chaudannes</a></h3>
       <p class="card-body">Valgelon-la-Rochette — 06 71 36 49 76 — brosset73@gmail.com — gites-de-france.com</p>
     </div>
     <div class="card" data-reveal>
-      <span class="card-kicker">Airbnb</span>
-      <h3 class="card-title">Autour du Clos de Florie</h3>
-      <p class="card-body">27 logements présents sur Airbnb autour des Marches — voir airbnb.fr.</p>
-    </div>
-    <div class="card" data-reveal>
       <span class="card-kicker">Nuit de noces</span>
-      <h3 class="card-title">Le Cellier Spa — Saint-Maximin</h3>
+      <h3 class="card-title"><a href="https://www.google.com/maps/search/?api=1&amp;query=Le%20Cellier%20Spa%20Saint-Maximin" target="_blank" rel="noopener">Le Cellier Spa — Saint-Maximin</a></h3>
       <p class="card-body">Maison d'hôte avec espace bien-être privatif. Contact : tiffany@lecellierspa.fr — 06 76 20 68 25</p>
     </div>
     <div class="card" data-reveal>
       <span class="card-kicker">Transport</span>
-      <h3 class="card-title">Parking &amp; navettes</h3>
-      <p class="card-body">[Détails sur le parking sur place et les navettes prévues entre l'hébergement et le lieu de fête.]</p>
+      <h3 class="card-title">Parking &amp; Sam</h3>
+      <p class="card-body">Un grand parking est disponible sur place, au bord de la D1090. Pas de navettes prévues : pensez à désigner un·e Sam.</p>
+    </div>
+    <div class="card" data-reveal>
+      <span class="card-kicker">Camping-car</span>
+      <h3 class="card-title">Dormir sur le parking</h3>
+      <p class="card-body">Vous avez un camion ou van aménagé ? Vous pouvez dormir sur le grand parking prévu à cet effet. Les tentes ne sont en revanche pas autorisées sur le site.</p>
     </div>
   </div>
 
@@ -217,19 +224,19 @@ html{scroll-behavior:smooth}
   <span data-reveal style="display:block;font-size:13px;letter-spacing:0.08em;text-transform:uppercase;color:var(--color-accent-700);margin-bottom:14px">En images</span>
   <h2 data-reveal style="font-size:34px;margin:0 0 40px">Nous deux</h2>
   <div style="display:grid;grid-template-columns:repeat(6,minmax(0,1fr));grid-auto-rows:110px;gap:18px 22px">
-    <figure class="plate" data-reveal style="margin:0;grid-column:span 2;grid-row:span 2;transform:rotate(-3deg);z-index:1"><img src="assets/gallery-01.jpg" alt="" style="width:100%;height:100%;object-fit:cover;display:block;cursor:zoom-in" onClick="{{ onOpenLightbox }}"/></figure>
-    <figure class="plate" data-reveal style="margin:0;grid-column:span 2;grid-row:span 3;transform:rotate(2deg)"><img src="assets/gallery-08.jpg" alt="" style="width:100%;height:100%;object-fit:cover;display:block;cursor:zoom-in" onClick="{{ onOpenLightbox }}"/></figure>
-    <figure class="plate" data-reveal style="margin:0;grid-column:span 2;grid-row:span 2;transform:rotate(4deg)"><img src="assets/gallery-02.jpg" alt="" style="width:100%;height:100%;object-fit:cover;display:block;cursor:zoom-in" onClick="{{ onOpenLightbox }}"/></figure>
-    <figure class="plate" data-reveal style="margin:0;grid-column:span 2;grid-row:span 2;transform:rotate(-2deg)"><img src="assets/gallery-09.jpg" alt="" style="width:100%;height:100%;object-fit:cover;display:block;cursor:zoom-in" onClick="{{ onOpenLightbox }}"/></figure>
-    <figure class="plate" data-reveal style="margin:0;grid-column:span 2;grid-row:span 3;transform:rotate(-4deg)"><img src="assets/gallery-05.jpg" alt="" style="width:100%;height:100%;object-fit:cover;display:block;cursor:zoom-in" onClick="{{ onOpenLightbox }}"/></figure>
-    <figure class="plate" data-reveal style="margin:0;grid-column:span 2;grid-row:span 2;transform:rotate(3deg)"><img src="assets/gallery-11.jpg" alt="" style="width:100%;height:100%;object-fit:cover;display:block;cursor:zoom-in" onClick="{{ onOpenLightbox }}"/></figure>
-    <figure class="plate" data-reveal style="margin:0;grid-column:span 3;grid-row:span 2;transform:rotate(-2deg)"><img src="assets/gallery-03.jpg" alt="" style="width:100%;height:100%;object-fit:cover;display:block;cursor:zoom-in" onClick="{{ onOpenLightbox }}"/></figure>
-    <figure class="plate" data-reveal style="margin:0;grid-column:span 3;grid-row:span 2;transform:rotate(3deg)"><img src="assets/gallery-12.jpg" alt="" style="width:100%;height:100%;object-fit:cover;display:block;cursor:zoom-in" onClick="{{ onOpenLightbox }}"/></figure>
-    <figure class="plate" data-reveal style="margin:0;grid-column:span 2;grid-row:span 2;transform:rotate(-3deg)"><img src="assets/gallery-06.jpg" alt="" style="width:100%;height:100%;object-fit:cover;display:block;cursor:zoom-in" onClick="{{ onOpenLightbox }}"/></figure>
-    <figure class="plate" data-reveal style="margin:0;grid-column:span 2;grid-row:span 3;transform:rotate(2deg)"><img src="assets/gallery-10.jpg" alt="" style="width:100%;height:100%;object-fit:cover;display:block;cursor:zoom-in" onClick="{{ onOpenLightbox }}"/></figure>
-    <figure class="plate" data-reveal style="margin:0;grid-column:span 2;grid-row:span 2;transform:rotate(-4deg)"><img src="assets/gallery-07.jpg" alt="" style="width:100%;height:100%;object-fit:cover;display:block;cursor:zoom-in" onClick="{{ onOpenLightbox }}"/></figure>
-    <figure class="plate" data-reveal style="margin:0;grid-column:span 2;grid-row:span 2;transform:rotate(4deg)"><img src="assets/gallery-04.png" alt="" style="width:100%;height:100%;object-fit:cover;display:block;cursor:zoom-in" onClick="{{ onOpenLightbox }}"/></figure>
-    <figure class="plate" data-reveal style="margin:0;grid-column:span 3;grid-row:span 2;transform:rotate(-2deg)"><img src="assets/gallery-13.jpeg" alt="" style="width:100%;height:100%;object-fit:cover;display:block;cursor:zoom-in" onClick="{{ onOpenLightbox }}"/></figure>
+    <figure class="plate" data-reveal style="margin:0;grid-column:span 2;grid-row:span 2;transform:rotate(-3deg);z-index:1"><image-slot id="gallery-img-01" shape="rect" src="assets/gallery-01.jpg" onClick="{{ onOpenLightbox }}" style="width:100%;height:100%;cursor:zoom-in" placeholder="Photo"></image-slot></figure>
+    <figure class="plate" data-reveal style="margin:0;grid-column:span 2;grid-row:span 3;transform:rotate(2deg)"><image-slot id="gallery-img-08" shape="rect" src="assets/gallery-08.jpg" onClick="{{ onOpenLightbox }}" style="width:100%;height:100%;cursor:zoom-in" placeholder="Photo"></image-slot></figure>
+    <figure class="plate" data-reveal style="margin:0;grid-column:span 2;grid-row:span 2;transform:rotate(4deg)"><image-slot id="gallery-img-02" shape="rect" src="assets/gallery-02.jpg" onClick="{{ onOpenLightbox }}" style="width:100%;height:100%;cursor:zoom-in" placeholder="Photo"></image-slot></figure>
+    <figure class="plate" data-reveal style="margin:0;grid-column:span 2;grid-row:span 2;transform:rotate(-2deg)"><image-slot id="gallery-img-09" shape="rect" src="assets/gallery-09.jpg" onClick="{{ onOpenLightbox }}" style="width:100%;height:100%;cursor:zoom-in" placeholder="Photo"></image-slot></figure>
+    <figure class="plate" data-reveal style="margin:0;grid-column:span 2;grid-row:span 3;transform:rotate(-4deg)"><image-slot id="gallery-img-05" shape="rect" src="assets/gallery-05.jpg" onClick="{{ onOpenLightbox }}" style="width:100%;height:100%;cursor:zoom-in" placeholder="Photo"></image-slot></figure>
+    <figure class="plate" data-reveal style="margin:0;grid-column:span 2;grid-row:span 2;transform:rotate(3deg)"><image-slot id="gallery-img-11" shape="rect" src="assets/gallery-11.jpg" onClick="{{ onOpenLightbox }}" style="width:100%;height:100%;cursor:zoom-in" placeholder="Photo"></image-slot></figure>
+    <figure class="plate" data-reveal style="margin:0;grid-column:span 3;grid-row:span 2;transform:rotate(-2deg)"><image-slot id="gallery-img-03" shape="rect" src="assets/gallery-03.jpg" onClick="{{ onOpenLightbox }}" style="width:100%;height:100%;cursor:zoom-in" placeholder="Photo"></image-slot></figure>
+    <figure class="plate" data-reveal style="margin:0;grid-column:span 3;grid-row:span 2;transform:rotate(3deg)"><image-slot id="gallery-img-12" shape="rect" src="assets/gallery-12.jpg" onClick="{{ onOpenLightbox }}" style="width:100%;height:100%;cursor:zoom-in" placeholder="Photo"></image-slot></figure>
+    <figure class="plate" data-reveal style="margin:0;grid-column:span 2;grid-row:span 2;transform:rotate(-3deg)"><image-slot id="gallery-img-06" shape="rect" src="assets/gallery-06.jpg" onClick="{{ onOpenLightbox }}" style="width:100%;height:100%;cursor:zoom-in" placeholder="Photo"></image-slot></figure>
+    <figure class="plate" data-reveal style="margin:0;grid-column:span 2;grid-row:span 3;transform:rotate(2deg)"><image-slot id="gallery-img-10" shape="rect" src="assets/gallery-10.jpg" onClick="{{ onOpenLightbox }}" style="width:100%;height:100%;cursor:zoom-in" placeholder="Photo"></image-slot></figure>
+    <figure class="plate" data-reveal style="margin:0;grid-column:span 2;grid-row:span 2;transform:rotate(-4deg)"><image-slot id="gallery-img-07" shape="rect" src="assets/gallery-07.jpg" onClick="{{ onOpenLightbox }}" style="width:100%;height:100%;cursor:zoom-in" placeholder="Photo"></image-slot></figure>
+    <figure class="plate" data-reveal style="margin:0;grid-column:span 2;grid-row:span 2;transform:rotate(4deg)"><image-slot id="gallery-img-04" shape="rect" src="assets/gallery-04.png" onClick="{{ onOpenLightbox }}" style="width:100%;height:100%;cursor:zoom-in" placeholder="Photo"></image-slot></figure>
+    <figure class="plate" data-reveal style="margin:0;grid-column:span 3;grid-row:span 2;transform:rotate(-2deg)"><image-slot id="gallery-img-13" shape="rect" src="assets/gallery-13.jpeg" onClick="{{ onOpenLightbox }}" style="width:100%;height:100%;cursor:zoom-in" placeholder="Photo"></image-slot></figure>
   </div>
 </section>
 
@@ -335,7 +342,7 @@ html{scroll-behavior:smooth}
   </div>
 </div>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props="{&quot;showCountdown&quot;: {&quot;editor&quot;: &quot;boolean&quot;, &quot;default&quot;: true, &quot;tsType&quot;: &quot;boolean&quot;, &quot;section&quot;: &quot;Comportement&quot;}, &quot;rsvpDeadline&quot;: {&quot;editor&quot;: &quot;text&quot;, &quot;default&quot;: &quot;1 juillet 2027&quot;, &quot;tsType&quot;: &quot;string&quot;, &quot;section&quot;: &quot;RSVP&quot;}, &quot;rsvpRecipientEmail&quot;: {&quot;editor&quot;: &quot;text&quot;, &quot;default&quot;: &quot;contact@mariage-kim-et-leo.fr&quot;, &quot;tsType&quot;: &quot;string&quot;, &quot;section&quot;: &quot;RSVP&quot;}, &quot;invitationPdfUrl&quot;: {&quot;editor&quot;: &quot;text&quot;, &quot;default&quot;: &quot;&quot;, &quot;tsType&quot;: &quot;string&quot;, &quot;section&quot;: &quot;Faire-part&quot;}}">
+<script type="text/x-dc" data-dc-script data-props="{&quot;showCountdown&quot;: {&quot;editor&quot;: &quot;boolean&quot;, &quot;default&quot;: true, &quot;tsType&quot;: &quot;boolean&quot;, &quot;section&quot;: &quot;Comportement&quot;}, &quot;rsvpDeadline&quot;: {&quot;editor&quot;: &quot;text&quot;, &quot;default&quot;: &quot;1 juillet 2027&quot;, &quot;tsType&quot;: &quot;string&quot;, &quot;section&quot;: &quot;RSVP&quot;}, &quot;rsvpRecipientEmail&quot;: {&quot;editor&quot;: &quot;text&quot;, &quot;default&quot;: &quot;leopold.guerin@gmail.com&quot;, &quot;tsType&quot;: &quot;string&quot;, &quot;section&quot;: &quot;RSVP&quot;}, &quot;invitationPdfUrl&quot;: {&quot;editor&quot;: &quot;text&quot;, &quot;default&quot;: &quot;&quot;, &quot;tsType&quot;: &quot;string&quot;, &quot;section&quot;: &quot;Faire-part&quot;}}">
 class Component extends DCLogic {
   state = {
     name: '', email: '', attending: 'Les deux jours', bringingPlusOne: false, plusOneName: '', meal: 'Sans préférence', message: '',
@@ -416,7 +423,15 @@ class Component extends DCLogic {
   }
 
   openLightbox(e) {
-    const src = e.currentTarget.src;
+    const path = e.composedPath ? e.composedPath() : [];
+    if (path.some((el) => el.classList && (el.classList.contains('ctl') || el.classList.contains('spill')))) return;
+    const host = e.currentTarget;
+    let src = host.src;
+    if (host.tagName === 'IMAGE-SLOT' && host.shadowRoot) {
+      const inner = host.shadowRoot.querySelector('.frame img');
+      if (inner && inner.src) src = inner.src;
+    }
+    if (!src) return;
     this.setState({ lightboxSrc: src });
     const img = document.getElementById('lightbox-img');
     if (img) img.src = src;
@@ -471,7 +486,7 @@ class Component extends DCLogic {
   }
 
   renderVals() {
-    const recipient = this.props.rsvpRecipientEmail ?? 'contact@mariage-kim-et-leo.fr';
+    const recipient = this.props.rsvpRecipientEmail ?? 'leopold.guerin@gmail.com';
     const pdfUrl = this.props.invitationPdfUrl ?? '';
     const s = this.state;
     return {
