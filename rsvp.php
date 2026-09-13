@@ -1,7 +1,8 @@
 <?php
 /**
- * Traitement du formulaire RSVP - envoie un e-mail directement au marié
- * sans passer par mailto: (qui dépend du logiciel de messagerie du visiteur).
+ * Traitement du formulaire RSVP - envoie un e-mail via SMTP authentifié
+ * (PHPMailer) plutôt que la fonction mail() native, pour une bien meilleure
+ * délivrabilité (moins de risque de finir en spam).
  */
 
 header('Content-Type: application/json; charset=utf-8');
@@ -12,6 +13,23 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     echo json_encode(['ok' => false, 'error' => 'method_not_allowed']);
     exit;
 }
+
+require __DIR__ . '/vendor/PHPMailer/src/Exception.php';
+require __DIR__ . '/vendor/PHPMailer/src/PHPMailer.php';
+require __DIR__ . '/vendor/PHPMailer/src/SMTP.php';
+
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception as PHPMailerException;
+
+// Config SMTP : fichier volontairement hors du dépôt Git (voir mail_config.example.php).
+// Il doit être déposé manuellement sur le serveur, à côté de ce script.
+$configPath = __DIR__ . '/mail_config.php';
+if (!file_exists($configPath)) {
+    http_response_code(500);
+    echo json_encode(['ok' => false, 'error' => 'missing_config']);
+    exit;
+}
+$config = require $configPath;
 
 // Lecture du corps (JSON envoyé par le site) avec repli sur $_POST classique
 $raw = file_get_contents('php://input');
@@ -62,7 +80,7 @@ if (!empty($errors)) {
     exit;
 }
 
-// Destinataire (fixe, on ne le laisse jamais venir du formulaire)
+// Destinataire final (fixe, on ne le laisse jamais venir du formulaire)
 $to = 'leopold.guerin@gmail.com';
 $subject = 'RSVP - ' . $name;
 
@@ -78,24 +96,31 @@ $bodyLines = [
 ];
 $body = implode("\n", $bodyLines);
 
-// En-têtes de l'e-mail. On envoie "From" avec un domaine du site (beaucoup
-// d'hébergeurs rejettent un From avec un domaine externe type gmail.com),
-// et on met l'adresse du répondant en "Reply-To" pour pouvoir lui répondre
-// directement depuis la boîte mail.
-$hostForFrom = $_SERVER['SERVER_NAME'] ?? 'mariage-kim-et-leo.fr';
-$fromAddress = 'rsvp@' . $hostForFrom;
+$mail = new PHPMailer(true);
+try {
+    $mail->isSMTP();
+    $mail->Host       = $config['host'];
+    $mail->Port       = $config['port'];
+    $mail->SMTPAuth   = true;
+    $mail->Username   = $config['username'];
+    $mail->Password   = $config['password'];
+    $mail->SMTPSecure = $config['encryption'] === 'ssl'
+        ? PHPMailer::ENCRYPTION_SMTPS
+        : PHPMailer::ENCRYPTION_STARTTLS;
+    $mail->CharSet    = 'UTF-8';
 
-$headers = [];
-$headers[] = 'From: Site Mariage <' . $fromAddress . '>';
-$headers[] = 'Reply-To: ' . $name . ' <' . $email . '>';
-$headers[] = 'Content-Type: text/plain; charset=UTF-8';
-$headers[] = 'X-Mailer: PHP/' . phpversion();
+    $mail->setFrom($config['from_email'], $config['from_name']);
+    $mail->addAddress($to);
+    // Pour pouvoir répondre directement à la personne qui a rempli le formulaire
+    $mail->addReplyTo($email, $name);
 
-$success = mail($to, $subject, $body, implode("\r\n", $headers));
+    $mail->Subject = $subject;
+    $mail->Body    = $body;
+    $mail->isHTML(false);
 
-if ($success) {
+    $mail->send();
     echo json_encode(['ok' => true]);
-} else {
+} catch (PHPMailerException $e) {
     http_response_code(500);
-    echo json_encode(['ok' => false, 'error' => 'mail_failed']);
+    echo json_encode(['ok' => false, 'error' => 'mail_failed', 'detail' => $mail->ErrorInfo]);
 }
