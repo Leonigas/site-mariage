@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="_ds/classical-30754182-3890-42bd-b6f7-e94e913aec44/styles.css">
+<script src="_ds/classical-30754182-3890-42bd-b6f7-e94e913aec44/_ds_bundle.js"></script>
+<script src="./image-slot.js"></script>
+<script src="https://www.youtube.com/iframe_api"></script>
+<script src="https://www.youtube.com/iframe_api"></script>
+<style>
+body{margin:0;text-wrap:pretty}
+a{color:var(--color-accent-700)}
+a:hover{color:var(--color-accent-600)}
+.btn{font-family:var(--font-body) !important}
+html{scroll-behavior:smooth}
+#galerie figure{transition:transform 0.25s ease, box-shadow 0.25s ease}
+#galerie figure:hover{transform:rotate(0deg) scale(1.04) !important;box-shadow:var(--shadow-lg);z-index:2}
+@media (max-width: 780px){#galerie > div{grid-template-columns:repeat(2,minmax(0,1fr)) !important}}
+
+@keyframes garlandSway{0%,100%{transform:rotate(-1.2deg) translateY(0px)}50%{transform:rotate(1.2deg) translateY(3px)}}
+#garland-img{transform-origin:top center;animation:garlandSway 4.5s ease-in-out infinite;transition:transform 0.4s ease}
+#garland-img:hover{animation-play-state:paused;transform:rotate(-2.5deg) translateY(8px) scale(1.015)}
+
+#hero-drawing{transition:transform 0.5s cubic-bezier(.34,1.56,.64,1)}
+#hero-drawing:hover{transform:scale(1.06) rotate(-1.5deg)}
+
+[data-reveal]{opacity:0;transform:translateY(30px) scale(0.98);transition:opacity 0.8s cubic-bezier(.22,1,.36,1), transform 0.8s cubic-bezier(.22,1,.36,1)}
+[data-reveal].is-visible{opacity:1;transform:translateY(0) scale(1)}
+@media (prefers-reduced-motion: reduce){
+  [data-reveal]{opacity:1;transform:none;transition:none}
+  #garland-img{animation:none}
+}
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}}
+
+@keyframes musicBtnIntro{0%{transform:scale(1) rotate(0deg)}8%{transform:scale(1.2) translateY(-14px) rotate(-12deg)}16%{transform:scale(1.1) translateY(0) rotate(10deg)}24%{transform:scale(1.15) translateY(-8px) rotate(-8deg)}32%{transform:scale(1.05) translateY(0) rotate(6deg)}40%{transform:scale(1.1) translateY(-4px) rotate(-4deg)}55%{transform:scale(1) rotate(2deg)}70%{transform:scale(1.04) rotate(-2deg)}100%{transform:scale(1) rotate(0deg)}}
+#music-btn{animation:musicBtnIntro 1.8s cubic-bezier(.36,.07,.19,.97) 1}
+@keyframes tooltipBob{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+#music-tooltip{animation:tooltipBob 1.6s ease-in-out infinite}
+@media (prefers-reduced-motion: reduce){#music-btn{animation:none}#music-tooltip{animation:none}}
+</style>
+</helmet>
+<section id="accueil" style="position:relative;background:var(--color-bg);overflow:hidden">
+<div style="position:absolute;inset:0;background-image:url('assets/nature-ceremony-field.avif');background-size:cover;background-position:center 30%"></div>
+<div style="position:absolute;inset:0;background:color-mix(in srgb, white 45%, transparent)"></div>
+<img id="garland-img" src="assets/garland.png" alt="" style="position:relative;width:100%;height:auto;display:block;z-index:1" />
+<div style="position:absolute;inset:0;background:linear-gradient(180deg, transparent 0%, transparent 18%, color-mix(in srgb, var(--color-bg) 60%, transparent) 45%, var(--color-bg) 88%)"></div>
+<nav class="nav" style="background:transparent;border-bottom:none;position:absolute;top:clamp(90px,13.25vw,480px);left:0;right:0;z-index:2">
+  <span class="nav-brand">Kim &amp; Léopold</span>
+  <a href="#programme">Programme</a>
+  <a href="#temoins">Témoins</a>
+  <a href="#hebergement">Hébergement</a>
+  <a href="#galerie">Galerie</a>
+  <a href="#faq">FAQ</a>
+  <a href="{{ invitationPdfHref }}" download="{{ true }}" class="btn btn-ghost" title="{{ invitationPdfTitle }}" style="{{ invitationPdfStyle }}font-family:var(--font-body);font-weight:600">Faire-part (PDF)</a>
+  <a href="#rsvp" class="btn btn-primary">RSVP</a>
+</nav>
+<div style="position:relative;max-width:1200px;margin:0 auto;padding:clamp(20px,5vw,72px);min-height:78vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:16px">
+  <span style="display:block;font-size:13px;letter-spacing:0.08em;text-transform:uppercase;color:var(--color-accent-700);font-feature-settings:'tnum' 1">Samedi 7 &amp; dimanche 8 août 2027</span>
+  <img id="hero-drawing" src="assets/drawing-couple.png" alt="Illustration de Kim et Léopold" style="width:min(400px,74%);height:auto;margin:8px 0;cursor:pointer" />
+  <h1 style="font-family:var(--font-title-alt);font-weight:400;font-size:clamp(36px,6vw,68px);line-height:1.25;letter-spacing:0.04em;text-transform:uppercase;margin:0">Kim &amp; Léopold</h1>
+  <p style="font-size:17px;line-height:28px;max-width:52ch;color:color-mix(in srgb, var(--color-text) 82%, transparent);margin:0">Ont hâte de célébrer avec vous leur mariage. Rendez-vous à 15h00 au <a href="https://leclosdeflorie.com/" target="_blank" rel="noopener">Clos de Florie</a>, 1436 route du Grésivaudan, 73800 Porte-de-Savoie.</p>
+  <div data-reveal style="display:flex;gap:13.8px;flex-wrap:wrap;justify-content:center;margin-top:12px">
+    <a href="#rsvp" class="btn btn-primary" style="font-size:17px;padding:16px 28px">Répondre au RSVP</a>
+    <a href="#programme" class="btn btn-ghost" style="font-size:17px;padding:16px 28px">Voir le programme</a>
+  </div>
+  <sc-if value="{{ showCountdown }}" hint-placeholder-val="{{ true }}">
+    <p style="font-size:15.5px;line-height:28px;color:color-mix(in srgb, var(--color-text) 70%, transparent);margin-top:8px;font-feature-settings:'tnum' 1">Plus que <strong style="color:var(--color-accent-700)">{{ daysRemaining }}</strong> jours avant le grand jour.</p>
+  </sc-if>
+  <span style="margin-top:20px;font-size:12px;letter-spacing:0.08em;text-transform:uppercase;color:color-mix(in srgb, var(--color-text) 55%, transparent)">↓ Faites défiler pour les informations</span>
+</div>
+</section>
+
+<section id="programme" style="background:var(--color-surface)">
+<div style="max-width:1200px;margin:0 auto;padding:clamp(48px,7vw,84px) clamp(20px,5vw,72px)">
+  <span data-reveal style="display:block;font-size:13px;letter-spacing:0.08em;text-transform:uppercase;color:var(--color-accent-700);margin-bottom:14px">Programme</span>
+  <h2 data-reveal style="font-size:34px;margin:0 0 32px">Deux jours de fête</h2>
+  <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:40px">
+    <div data-reveal>
+      <h3 style="font-family:var(--font-heading);font-size:20px;color:var(--color-accent-700);margin:0 0 12px">Samedi 07</h3>
+      <div style="display:flex;flex-direction:column">
+        <div style="padding:14px 0;border-top:1px solid var(--color-divider)"><p style="margin:0;font-size:16px">Accueil</p></div>
+        <div style="padding:14px 0;border-top:1px solid var(--color-divider)"><p style="margin:0;font-size:16px">Cérémonie laïque</p></div>
+        <div style="padding:14px 0;border-top:1px solid var(--color-divider)"><p style="margin:0;font-size:16px">Cocktail</p></div>
+        <div style="padding:14px 0;border-top:1px solid var(--color-divider)"><p style="margin:0;font-size:16px">Festin</p></div>
+        <div style="padding:14px 0;border-top:1px solid var(--color-divider)"><p style="margin:0;font-size:16px">Concert</p></div>
+        <div style="padding:14px 0;border-top:1px solid var(--color-divider);border-bottom:1px solid var(--color-divider)"><p style="margin:0;font-size:16px">Giga teuf</p></div>
+      </div>
+    </div>
+    <div data-reveal>
+      <h3 style="font-family:var(--font-heading);font-size:20px;color:var(--color-accent-700);margin:0 0 12px">Dimanche 08</h3>
+      <div style="display:flex;flex-direction:column">
+        <div style="padding:14px 0;border-top:1px solid var(--color-divider)"><p style="margin:0;font-size:16px">Brunch</p></div>
+        <div style="padding:14px 0;border-top:1px solid var(--color-divider)"><p style="margin:0;font-size:16px">Tournoi de tranchette</p></div>
+        <div style="padding:14px 0;border-top:1px solid var(--color-divider);border-bottom:1px solid var(--color-divider)"><p style="margin:0;font-size:16px">Sieste dans les vignes</p></div>
+      </div>
+    </div>
+  </div>
+  <p style="font-size:14.5px;margin:28px 0 0;color:color-mix(in srgb, var(--color-text) 70%, transparent)">Rendez-vous à 15h00 au Clos de Florie, 1436 route du Grésivaudan, 73800 Porte-de-Savoie.</p>
+</div>
+</section>
+
+<section id="moment-1" data-parallax style="position:relative;height:70vh;overflow:hidden;background:var(--color-neutral-800)">
+  <image-slot id="moment-photo-1" shape="rect" src="assets/vineyard-test.avif" data-parallax-layer style="position:absolute;top:-10%;left:0;width:100%;height:120%;object-fit:cover" placeholder="Photo pleine largeur"></image-slot>
+</section>
+
+<section id="temoins" style="background:var(--color-bg)">
+<div style="max-width:1200px;margin:0 auto;padding:clamp(48px,7vw,84px) clamp(20px,5vw,72px)">
+  <span data-reveal style="display:block;font-size:13px;letter-spacing:0.08em;text-transform:uppercase;color:var(--color-accent-700);margin-bottom:14px">Le cortège</span>
+  <h2 data-reveal style="font-size:34px;margin:0 0 32px">Témoins &amp; cortège</h2>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:28px">
+    <div data-reveal style="display:flex;flex-direction:column;align-items:center;gap:12px;text-align:center">
+      <image-slot id="temoin-1" shape="circle" style="width:120px;height:120px" placeholder="Photo"></image-slot>
+      <div><h4 style="font-size:16px;margin:0 0 2px">[Prénom Nom]</h4><p style="font-size:12.5px;margin:0;color:color-mix(in srgb, var(--color-text) 60%, transparent)">Témoin de Kim</p></div>
+    </div>
+    <div data-reveal style="display:flex;flex-direction:column;align-items:center;gap:12px;text-align:center">
+      <image-slot id="temoin-2" shape="circle" style="width:120px;height:120px" placeholder="Photo"></image-slot>
+      <div><h4 style="font-size:16px;margin:0 0 2px">[Prénom Nom]</h4><p style="font-size:12.5px;margin:0;color:color-mix(in srgb, var(--color-text) 60%, transparent)">Témoin de Kim</p></div>
+    </div>
+    <div data-reveal style="display:flex;flex-direction:column;align-items:center;gap:12px;text-align:center">
+      <image-slot id="temoin-3" shape="circle" style="width:120px;height:120px" placeholder="Photo"></image-slot>
+      <div><h4 style="font-size:16px;margin:0 0 2px">[Prénom Nom]</h4><p style="font-size:12.5px;margin:0;color:color-mix(in srgb, var(--color-text) 60%, transparent)">Témoin de Léopold</p></div>
+    </div>
+    <div data-reveal style="display:flex;flex-direction:column;align-items:center;gap:12px;text-align:center">
+      <image-slot id="temoin-4" shape="circle" style="width:120px;height:120px" placeholder="Photo"></image-slot>
+      <div><h4 style="font-size:16px;margin:0 0 2px">[Prénom Nom]</h4><p style="font-size:12.5px;margin:0;color:color-mix(in srgb, var(--color-text) 60%, transparent)">Témoin de Léopold</p></div>
+    </div>
+  </div>
+  <p style="font-size:14.5px;line-height:24px;margin:32px 0 0;color:color-mix(in srgb, var(--color-text) 70%, transparent)">Le logement du Clos — l'appartement meublé situé sur le domaine du Clos de Florie — est réservé aux mariés et aux témoins. Kim &amp; Léopold s'occupent de son organisation.</p>
+</div>
+</section>
+
+<hr class="hr" style="max-width:1200px;margin:0 auto">
+
+<section id="ambiance" style="max-width:1200px;margin:0 auto;padding:clamp(56px,8vw,96px) clamp(20px,5vw,72px)">
+  <span data-reveal style="display:block;font-size:13px;letter-spacing:0.08em;text-transform:uppercase;color:var(--color-accent-700);margin-bottom:14px">L'ambiance</span>
+  <h2 data-reveal style="font-size:34px;margin:0 0 32px">Une fête au jardin</h2>
+  <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px;align-items:end">
+    <figure class="plate" data-reveal style="margin:0;grid-column:span 1"><image-slot id="ambiance-1" shape="rect" src="assets/nature-lights-table.avif" style="width:100%;aspect-ratio:3/4;object-fit:cover" placeholder="Photo"></image-slot></figure>
+    <figure class="plate" data-reveal style="margin:0;grid-column:span 1;transform:translateY(-28px)"><image-slot id="ambiance-2" shape="rect" src="assets/nature-flowers.avif" style="width:100%;aspect-ratio:3/4;object-fit:cover" placeholder="Photo"></image-slot></figure>
+    <figure class="plate" data-reveal style="margin:0;grid-column:span 1"><image-slot id="ambiance-3" shape="rect" src="assets/nature-tomatoes.avif" style="width:100%;aspect-ratio:3/4;object-fit:cover" placeholder="Photo"></image-slot></figure>
+  </div>
+</section>
+
+<hr class="hr" style="max-width:1200px;margin:0 auto">
+
+<section id="hebergement" style="max-width:1200px;margin:0 auto;padding:clamp(48px,7vw,84px) clamp(20px,5vw,72px)">
+  <span data-reveal style="display:block;font-size:13px;letter-spacing:0.08em;text-transform:uppercase;color:var(--color-accent-700);margin-bottom:14px">Sur place</span>
+  <h2 data-reveal style="font-size:34px;margin:0 0 32px">Hébergement &amp; transport</h2>
+
+  <div class="plate" data-reveal style="margin:0 0 32px;height:420px;overflow:hidden">
+    <iframe src="carte-hebergement.html" title="Carte des hébergements" style="width:100%;height:100%;border:0;display:block"></iframe>
+  </div>
+
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:24px">
+    <div class="card" data-reveal>
+      <span class="card-kicker">Camping</span>
+      <h3 class="card-title">Camping la Ferme du Lac</h3>
+      <p class="card-body">Les Marches — ouvert du 15 avril au 30 septembre. Tél : 04 79 28 13 48</p>
+    </div>
+    <div class="card" data-reveal>
+      <span class="card-kicker">Camping</span>
+      <h3 class="card-title">Family Camping</h3>
+      <p class="card-body">Challes-les-Eaux — family-camping-le-savoy.com</p>
+    </div>
+    <div class="card" data-reveal>
+      <span class="card-kicker">Hôtels</span>
+      <h3 class="card-title">Montmélian, Challes-les-Eaux, Barberaz</h3>
+      <p class="card-body">Plusieurs hôtels à 9-11 km du Clos de Florie.</p>
+    </div>
+    <div class="card" data-reveal>
+      <span class="card-kicker">Chambre d'hôtes</span>
+      <h3 class="card-title">La Castanea</h3>
+      <p class="card-body">Mme Grillet Hélène — 06 03 37 63 96 — lacastanea38@gmail.com — airbnb.com/h/lacastanea</p>
+    </div>
+    <div class="card" data-reveal>
+      <span class="card-kicker">Chambre d'hôtes &amp; gîte</span>
+      <h3 class="card-title">Les Tilleuls</h3>
+      <p class="card-body">121 avenue de Grenoble, 38530 Chapareillan — 06 26 99 69 82 — lestilleuls-chapareillan.fr</p>
+    </div>
+    <div class="card" data-reveal>
+      <span class="card-kicker">Gîtes</span>
+      <h3 class="card-title">Les Chaudannes</h3>
+      <p class="card-body">Valgelon-la-Rochette — 06 71 36 49 76 — brosset73@gmail.com — gites-de-france.com</p>
+    </div>
+    <div class="card" data-reveal>
+      <span class="card-kicker">Airbnb</span>
+      <h3 class="card-title">Autour du Clos de Florie</h3>
+      <p class="card-body">27 logements présents sur Airbnb autour des Marches — voir airbnb.fr.</p>
+    </div>
+    <div class="card" data-reveal>
+      <span class="card-kicker">Nuit de noces</span>
+      <h3 class="card-title">Le Cellier Spa — Saint-Maximin</h3>
+      <p class="card-body">Maison d'hôte avec espace bien-être privatif. Contact : tiffany@lecellierspa.fr — 06 76 20 68 25</p>
+    </div>
+    <div class="card" data-reveal>
+      <span class="card-kicker">Transport</span>
+      <h3 class="card-title">Parking &amp; navettes</h3>
+      <p class="card-body">[Détails sur le parking sur place et les navettes prévues entre l'hébergement et le lieu de fête.]</p>
+    </div>
+  </div>
+
+  <div class="card" data-reveal style="margin-top:24px;display:flex;flex-direction:column;align-items:center;text-align:center;gap:12px;padding:32px">
+    <span class="card-kicker">Airbnb</span>
+    <h3 class="card-title" style="margin:0">Trouvez un logement autour du Clos de Florie</h3>
+    <p class="card-body" style="max-width:52ch">Parcourez les locations Airbnb disponibles aux Marches et alentours pour la nuit du 7 au 8 août.</p>
+    <a href="https://www.airbnb.fr/s/Les-Marches/homes?search_type=unknown&amp;query=Les%20Marches&amp;adults=2&amp;checkin=2027-08-07&amp;checkout=2027-08-08&amp;date_picker_type=calendar&amp;search_mode=regular_search&amp;refinement_paths%5B%5D=%2Fhomes&amp;zoom_level=15" target="_blank" rel="noopener" class="btn btn-primary">Voir les logements sur Airbnb</a>
+  </div>
+</section>
+
+<section id="galerie" style="max-width:1200px;margin:0 auto;padding:clamp(56px,8vw,96px) clamp(20px,5vw,72px) clamp(72px,9vw,110px)">
+  <span data-reveal style="display:block;font-size:13px;letter-spacing:0.08em;text-transform:uppercase;color:var(--color-accent-700);margin-bottom:14px">En images</span>
+  <h2 data-reveal style="font-size:34px;margin:0 0 40px">Nous deux</h2>
+  <div style="display:grid;grid-template-columns:repeat(6,minmax(0,1fr));grid-auto-rows:110px;gap:18px 22px">
+    <figure class="plate" data-reveal style="margin:0;grid-column:span 2;grid-row:span 2;transform:rotate(-3deg);z-index:1"><img src="assets/gallery-01.jpg" alt="" style="width:100%;height:100%;object-fit:cover;display:block;cursor:zoom-in" onClick="{{ onOpenLightbox }}"/></figure>
+    <figure class="plate" data-reveal style="margin:0;grid-column:span 2;grid-row:span 3;transform:rotate(2deg)"><img src="assets/gallery-08.jpg" alt="" style="width:100%;height:100%;object-fit:cover;display:block;cursor:zoom-in" onClick="{{ onOpenLightbox }}"/></figure>
+    <figure class="plate" data-reveal style="margin:0;grid-column:span 2;grid-row:span 2;transform:rotate(4deg)"><img src="assets/gallery-02.jpg" alt="" style="width:100%;height:100%;object-fit:cover;display:block;cursor:zoom-in" onClick="{{ onOpenLightbox }}"/></figure>
+    <figure class="plate" data-reveal style="margin:0;grid-column:span 2;grid-row:span 2;transform:rotate(-2deg)"><img src="assets/gallery-09.jpg" alt="" style="width:100%;height:100%;object-fit:cover;display:block;cursor:zoom-in" onClick="{{ onOpenLightbox }}"/></figure>
+    <figure class="plate" data-reveal style="margin:0;grid-column:span 2;grid-row:span 3;transform:rotate(-4deg)"><img src="assets/gallery-05.jpg" alt="" style="width:100%;height:100%;object-fit:cover;display:block;cursor:zoom-in" onClick="{{ onOpenLightbox }}"/></figure>
+    <figure class="plate" data-reveal style="margin:0;grid-column:span 2;grid-row:span 2;transform:rotate(3deg)"><img src="assets/gallery-11.jpg" alt="" style="width:100%;height:100%;object-fit:cover;display:block;cursor:zoom-in" onClick="{{ onOpenLightbox }}"/></figure>
+    <figure class="plate" data-reveal style="margin:0;grid-column:span 3;grid-row:span 2;transform:rotate(-2deg)"><img src="assets/gallery-03.jpg" alt="" style="width:100%;height:100%;object-fit:cover;display:block;cursor:zoom-in" onClick="{{ onOpenLightbox }}"/></figure>
+    <figure class="plate" data-reveal style="margin:0;grid-column:span 3;grid-row:span 2;transform:rotate(3deg)"><img src="assets/gallery-12.jpg" alt="" style="width:100%;height:100%;object-fit:cover;display:block;cursor:zoom-in" onClick="{{ onOpenLightbox }}"/></figure>
+    <figure class="plate" data-reveal style="margin:0;grid-column:span 2;grid-row:span 2;transform:rotate(-3deg)"><img src="assets/gallery-06.jpg" alt="" style="width:100%;height:100%;object-fit:cover;display:block;cursor:zoom-in" onClick="{{ onOpenLightbox }}"/></figure>
+    <figure class="plate" data-reveal style="margin:0;grid-column:span 2;grid-row:span 3;transform:rotate(2deg)"><img src="assets/gallery-10.jpg" alt="" style="width:100%;height:100%;object-fit:cover;display:block;cursor:zoom-in" onClick="{{ onOpenLightbox }}"/></figure>
+    <figure class="plate" data-reveal style="margin:0;grid-column:span 2;grid-row:span 2;transform:rotate(-4deg)"><img src="assets/gallery-07.jpg" alt="" style="width:100%;height:100%;object-fit:cover;display:block;cursor:zoom-in" onClick="{{ onOpenLightbox }}"/></figure>
+    <figure class="plate" data-reveal style="margin:0;grid-column:span 2;grid-row:span 2;transform:rotate(4deg)"><img src="assets/gallery-04.png" alt="" style="width:100%;height:100%;object-fit:cover;display:block;cursor:zoom-in" onClick="{{ onOpenLightbox }}"/></figure>
+    <figure class="plate" data-reveal style="margin:0;grid-column:span 3;grid-row:span 2;transform:rotate(-2deg)"><img src="assets/gallery-13.jpeg" alt="" style="width:100%;height:100%;object-fit:cover;display:block;cursor:zoom-in" onClick="{{ onOpenLightbox }}"/></figure>
+  </div>
+</section>
+
+<section id="moment-2" data-parallax style="position:relative;height:70vh;overflow:hidden;background:var(--color-neutral-800)">
+  <image-slot id="moment-photo-2" shape="rect" src="assets/nature-lemon-table.avif" data-parallax-layer style="position:absolute;top:-10%;left:0;width:100%;height:120%;object-fit:cover" placeholder="Photo pleine largeur"></image-slot>
+</section>
+
+<section id="rsvp" style="background:var(--color-surface)">
+<div style="max-width:1200px;margin:0 auto;padding:clamp(48px,7vw,84px) clamp(20px,5vw,72px)">
+  <div style="max-width:640px;margin:0 auto">
+    <span data-reveal style="display:block;font-size:13px;letter-spacing:0.08em;text-transform:uppercase;color:var(--color-accent-700);margin-bottom:14px;text-align:center">RSVP</span>
+    <h2 data-reveal style="font-size:34px;margin:0 0 8px;text-align:center">Vous venez ?</h2>
+    <p style="font-size:15px;text-align:center;color:color-mix(in srgb, var(--color-text) 70%, transparent);margin:0 0 8px">Merci de répondre avant le {{ rsvpDeadline }}.</p>
+    <p style="font-size:13.5px;text-align:center;color:color-mix(in srgb, var(--color-text) 60%, transparent);margin:0 0 32px">Une seule réponse par couple, merci !</p>
+
+    <sc-if value="{{ submitted }}" hint-placeholder-val="{{ false }}">
+      <div class="card" style="text-align:center;padding:32px">
+        <h3 class="card-title" style="margin:0 0 8px">Merci !</h3>
+        <p class="card-body">Votre logiciel de messagerie devrait s'être ouvert avec votre réponse prête à envoyer. Si rien ne s'est passé, écrivez-nous directement à {{ rsvpRecipientEmail }}.</p>
+      </div>
+    </sc-if>
+    <sc-if value="{{ notSubmitted }}" hint-placeholder-val="{{ true }}">
+      <form data-reveal onSubmit="{{ onSubmitRsvp }}" style="display:flex;flex-direction:column;gap:20px">
+        <div class="field">
+          <label for="rsvp-name">Nom et prénom</label>
+          <input id="rsvp-name" class="input" type="text" required="{{ true }}" value="{{ name }}" onChange="{{ onChangeName }}" placeholder="Votre nom" />
+        </div>
+        <div class="field">
+          <label for="rsvp-email">Votre e-mail</label>
+          <input id="rsvp-email" class="input" type="email" required="{{ true }}" value="{{ email }}" onChange="{{ onChangeEmail }}" placeholder="vous@exemple.com" />
+        </div>
+        <div class="field">
+          <label>Quel(s) jour(s) serez-vous présent·e·s ?</label>
+          <div style="display:flex;flex-direction:column;gap:10px;margin-top:8px">
+            <label class="radio"><input type="radio" name="attending" value="Samedi uniquement" checked="{{ attendingSaturday }}" onChange="{{ onChangeAttending }}" /><span class="dot"></span>Samedi uniquement</label>
+            <label class="radio"><input type="radio" name="attending" value="Dimanche uniquement" checked="{{ attendingSunday }}" onChange="{{ onChangeAttending }}" /><span class="dot"></span>Dimanche uniquement</label>
+            <label class="radio"><input type="radio" name="attending" value="Les deux jours" checked="{{ attendingBoth }}" onChange="{{ onChangeAttending }}" /><span class="dot"></span>Les deux jours</label>
+            <label class="radio"><input type="radio" name="attending" value="Non" checked="{{ attendingNo }}" onChange="{{ onChangeAttending }}" /><span class="dot"></span>Je ne pourrai pas venir</label>
+          </div>
+        </div>
+        <div class="field">
+          <label>Accompagnement</label>
+          <div style="margin-top:4px">
+            <label class="radio"><input type="checkbox" checked="{{ bringingPlusOne }}" onChange="{{ onChangePlusOne }}" /><span class="dot"></span>Je viens accompagné·e</label>
+          </div>
+        </div>
+        <div class="field" style="display:{{ plusOneFieldDisplay }}">
+          <label for="rsvp-plus-one">Prénom et nom de votre accompagnant·e</label>
+          <input id="rsvp-plus-one" class="input" type="text" value="{{ plusOneName }}" onChange="{{ onChangePlusOneName }}" placeholder="Prénom Nom" />
+        </div>
+        <div class="field">
+          <label for="rsvp-meal">Préférence de menu</label>
+          <select id="rsvp-meal" class="input" value="{{ meal }}" onChange="{{ onChangeMeal }}">
+            <option value="Sans préférence">Sans préférence</option>
+            <option value="Végétarien">Végétarien</option>
+            <option value="Végétalien">Végétalien</option>
+            <option value="Sans gluten">Sans gluten</option>
+            <option value="Autre allergie">Autre allergie (précisez en message)</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="rsvp-message">Un mot pour nous ?</label>
+          <textarea id="rsvp-message" class="input" rows="3" value="{{ message }}" onChange="{{ onChangeMessage }}" placeholder="Allergies, mot doux..."></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary btn-block">Envoyer ma réponse</button>
+      </form>
+    </sc-if>
+  </div>
+</div>
+</section>
+
+<hr class="hr" style="max-width:1200px;margin:0 auto">
+
+<section id="faq" style="max-width:1200px;margin:0 auto;padding:clamp(48px,7vw,84px) clamp(20px,5vw,72px)">
+  <span data-reveal style="display:block;font-size:13px;letter-spacing:0.08em;text-transform:uppercase;color:var(--color-accent-700);margin-bottom:14px">Questions fréquentes</span>
+  <h2 data-reveal style="font-size:34px;margin:0 0 24px">FAQ</h2>
+  <div style="display:flex;flex-direction:column">
+    <details data-reveal style="padding:18px 0;border-top:1px solid var(--color-divider)"><summary style="cursor:pointer;font-family:var(--font-heading);font-size:18px">Quelle est la tenue de rigueur ?</summary><p style="font-size:15px;line-height:26px;margin:12px 0 0;color:color-mix(in srgb, var(--color-text) 78%, transparent)">Pas de dress code : l'ambiance sera détendue et guinguette. On vous conseille simplement des tenues légères, il devrait faire très chaud !</p></details>
+    <details data-reveal style="padding:18px 0;border-top:1px solid var(--color-divider)"><summary style="cursor:pointer;font-family:var(--font-heading);font-size:18px">Les enfants sont-ils bienvenus ?</summary><p style="font-size:15px;line-height:26px;margin:12px 0 0;color:color-mix(in srgb, var(--color-text) 78%, transparent)">On les aime très fort, mais on a fait le choix de réserver cette journée aux adultes. Le lieu se prête mal à leur présence et se trouve à proximité d'une route. On veut surtout que chacun d'entre vous puisse profiter pleinement de la fête, alors on compte sur votre compréhension.</p></details>
+    <details data-reveal style="padding:18px 0;border-top:1px solid var(--color-divider)"><summary style="cursor:pointer;font-family:var(--font-heading);font-size:18px">Avez-vous une liste de mariage ?</summary><p style="font-size:15px;line-height:26px;margin:12px 0 0;color:color-mix(in srgb, var(--color-text) 78%, transparent)">Non, ni liste ni cagnotte. On n'a besoin de rien d'autre que de vos sourires ce jour-là.</p></details>
+    <details data-reveal style="padding:18px 0;border-top:1px solid var(--color-divider)"><summary style="cursor:pointer;font-family:var(--font-heading);font-size:18px">Comment venir sur place ?</summary><p style="font-size:15px;line-height:26px;margin:12px 0 0;color:color-mix(in srgb, var(--color-text) 78%, transparent)">[Itinéraire, gare la plus proche, covoiturage.]</p></details>
+    <details data-reveal style="padding:18px 0;border-top:1px solid var(--color-divider)"><summary style="cursor:pointer;font-family:var(--font-heading);font-size:18px">Peut-on venir avec nos animaux ?</summary><p style="font-size:15px;line-height:26px;margin:12px 0 0;color:color-mix(in srgb, var(--color-text) 78%, transparent)">Les animaux ne sont malheureusement pas autorisés sur le lieu.</p></details>
+    <details data-reveal style="padding:18px 0;border-top:1px solid var(--color-divider);border-bottom:1px solid var(--color-divider)"><summary style="cursor:pointer;font-family:var(--font-heading);font-size:18px">Peut-on dormir sur place en camion ou en tente ?</summary><p style="font-size:15px;line-height:26px;margin:12px 0 0;color:color-mix(in srgb, var(--color-text) 78%, transparent)">Vous pouvez dormir dans votre camion sur le grand parking prévu à cet effet. En revanche, les tentes ne sont pas autorisées sur le site.</p></details>
+  </div>
+</section>
+
+<footer style="max-width:1200px;margin:0 auto;padding:32px clamp(20px,5vw,72px);font-size:13px;color:color-mix(in srgb, var(--color-text) 60%, transparent)">Kim &amp; Léopold · 7 août 2027</footer>
+
+<div onClick="{{ onCloseLightbox }}" style="position:fixed;inset:0;z-index:100;background:color-mix(in srgb, var(--color-neutral-900) 88%, transparent);align-items:center;justify-content:center;padding:40px;cursor:zoom-out;display:{{ lightboxDisplay }}">
+  <img id="lightbox-img" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==" alt="" style="max-width:100%;max-height:100%;object-fit:contain;box-shadow:var(--shadow-lg)"/>
+  <button onClick="{{ onCloseLightbox }}" aria-label="Fermer" style="position:absolute;top:24px;right:24px;width:44px;height:44px;border-radius:50%;border:1px solid #fdf9f2;background:transparent;color:#fdf9f2;font-size:20px;cursor:pointer">×</button>
+</div>
+
+<div id="yt-player" style="position:absolute;left:-9999px;width:300px;height:166px"></div>
+<div style="position:fixed;right:24px;bottom:24px;z-index:50;display:flex;flex-direction:column;align-items:flex-end;gap:6px">
+  <sc-if value="{{ showTooltip }}" hint-placeholder-val="{{ true }}">
+    <span id="music-tooltip" style="background:var(--color-neutral-900);color:#fdf9f2;font-size:12.5px;padding:6px 12px;border-radius:999px;white-space:nowrap;box-shadow:var(--shadow-md)">Clique-moi !</span>
+    <div style="width:8px;height:8px;background:var(--color-neutral-900);transform:rotate(45deg);margin:-4px 12px 0 0"></div>
+  </sc-if>
+  <div style="display:flex;gap:10px;align-items:center">
+    <button onClick="{{ onNextTrack }}" aria-label="Musique suivante" title="Musique suivante" style="width:40px;height:40px;border-radius:50%;border:1px solid var(--color-accent-700);background:var(--color-bg);color:var(--color-accent-700);font-size:16px;cursor:pointer;box-shadow:var(--shadow-md);align-items:center;justify-content:center;display:{{ nextButtonDisplay }}">»</button>
+    <button id="music-btn" onClick="{{ onToggleMusic }}" aria-label="{{ musicButtonLabel }}" title="{{ musicButtonLabel }}" style="width:52px;height:52px;border-radius:50%;border:1px solid var(--color-accent-700);background:var(--color-bg);color:var(--color-accent-700);font-size:20px;cursor:pointer;box-shadow:var(--shadow-md);display:flex;align-items:center;justify-content:center">{{ musicIcon }}</button>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;showCountdown&quot;: {&quot;editor&quot;: &quot;boolean&quot;, &quot;default&quot;: true, &quot;tsType&quot;: &quot;boolean&quot;, &quot;section&quot;: &quot;Comportement&quot;}, &quot;rsvpDeadline&quot;: {&quot;editor&quot;: &quot;text&quot;, &quot;default&quot;: &quot;1 juillet 2027&quot;, &quot;tsType&quot;: &quot;string&quot;, &quot;section&quot;: &quot;RSVP&quot;}, &quot;rsvpRecipientEmail&quot;: {&quot;editor&quot;: &quot;text&quot;, &quot;default&quot;: &quot;leopold.guerin@gmail.com&quot;, &quot;tsType&quot;: &quot;string&quot;, &quot;section&quot;: &quot;RSVP&quot;}, &quot;invitationPdfUrl&quot;: {&quot;editor&quot;: &quot;text&quot;, &quot;default&quot;: &quot;&quot;, &quot;tsType&quot;: &quot;string&quot;, &quot;section&quot;: &quot;Faire-part&quot;}}">
+class Component extends DCLogic {
+  state = {
+    name: '', email: '', attending: 'Les deux jours', bringingPlusOne: false, plusOneName: '', meal: 'Sans préférence', message: '',
+    submitted: false, musicPlaying: false, showTooltip: true, lightboxSrc: '', hasStartedMusic: false
+  };
+
+  componentDidMount() {
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          io.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+    this._io = io;
+
+    const revealAlreadyInView = () => {
+      document.querySelectorAll('[data-reveal]:not(.is-visible)').forEach((el) => {
+        const r = el.getBoundingClientRect();
+        if (r.top < window.innerHeight && r.bottom > 0) el.classList.add('is-visible');
+        else io.observe(el);
+      });
+    };
+
+    // template streams in progressively; observe once settled, and catch late nodes too
+    requestAnimationFrame(() => requestAnimationFrame(revealAlreadyInView));
+    this._mo = new MutationObserver(() => {
+      document.querySelectorAll('[data-reveal]:not(.is-visible)').forEach((el) => io.observe(el));
+    });
+    this._mo.observe(document.body, { childList: true, subtree: true });
+
+    let ticking = false;
+    this._onScroll = () => {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(() => {
+        document.querySelectorAll('[data-parallax]').forEach((section) => {
+          const layer = section.querySelector('[data-parallax-layer]');
+          if (!layer) return;
+          const r = section.getBoundingClientRect();
+          const progress = (r.top) / (window.innerHeight || 1);
+          layer.style.transform = `translateY(${progress * -40}px)`;
+        });
+        ticking = false;
+      });
+    };
+    window.addEventListener('scroll', this._onScroll, { passive: true });
+    this._onScroll();
+
+    const createPlayer = () => {
+      const mount = document.getElementById('yt-player');
+      if (!mount) return;
+      if (window.__weddingYtPlayer || mount.querySelector('iframe')) { this._ytPlayer = window.__weddingYtPlayer; return; }
+      const player = new window.YT.Player('yt-player', {
+        videoId: 'AASJTjjfmmI',
+        playerVars: { controls: 0 },
+        events: {
+          onStateChange: (e) => {
+            if (e.data === window.YT.PlayerState.PLAYING) this.setState({ musicPlaying: true });
+            else if (e.data === window.YT.PlayerState.PAUSED) this.setState({ musicPlaying: false });
+          },
+        },
+      });
+      window.__weddingYtPlayer = player;
+      this._ytPlayer = player;
+    };
+    if (window.YT && window.YT.Player) createPlayer();
+    else window.onYouTubeIframeAPIReady = createPlayer;
+  }
+
+  componentWillUnmount() {
+    if (this._io) this._io.disconnect();
+    if (this._mo) this._mo.disconnect();
+    if (this._onScroll) window.removeEventListener('scroll', this._onScroll);
+    if (this._ytPlayer && this._ytPlayer.destroy) { try { this._ytPlayer.destroy(); } catch (e) {} }
+    window.__weddingYtPlayer = null;
+  }
+
+  openLightbox(e) {
+    const src = e.currentTarget.src;
+    this.setState({ lightboxSrc: src });
+    const img = document.getElementById('lightbox-img');
+    if (img) img.src = src;
+  }
+
+  closeLightbox() {
+    this.setState({ lightboxSrc: '' });
+  }
+
+  getTracks() {
+    return [
+      { id: 'AASJTjjfmmI', start: 688 },
+      { id: 'AASJTjjfmmI', start: 803 },
+      { id: 'CL_3mlOPnGI', start: 0 },
+      { id: 'i_T_gsACpLs', start: 0 },
+      { id: 'dfgJYRdNwDE', start: 0 },
+      { id: 'AASJTjjfmmI', start: 1908 },
+    ];
+  }
+
+  toggleMusic() {
+    if (!this._ytPlayer) return;
+    this.setState({ showTooltip: false });
+    if (this.state.musicPlaying) {
+      this._ytPlayer.pauseVideo();
+      return;
+    }
+    if (this.state.hasStartedMusic) {
+      this._ytPlayer.playVideo();
+      return;
+    }
+    const tracks = this.getTracks();
+    const idx = Math.floor(Math.random() * tracks.length);
+    this._trackIndex = idx;
+    const track = tracks[idx];
+    this._ytPlayer.loadVideoById({ videoId: track.id, startSeconds: track.start });
+    this.setState({ hasStartedMusic: true });
+  }
+
+  nextTrack() {
+    if (!this._ytPlayer) return;
+    const tracks = this.getTracks();
+    this._trackIndex = ((this._trackIndex ?? -1) + 1) % tracks.length;
+    const track = tracks[this._trackIndex];
+    this._ytPlayer.loadVideoById({ videoId: track.id, startSeconds: track.start });
+  }
+
+  daysUntil(dateStr) {
+    const target = new Date(dateStr);
+    const now = new Date();
+    return Math.max(0, Math.ceil((target - now) / 86400000));
+  }
+
+  renderVals() {
+    const recipient = this.props.rsvpRecipientEmail ?? 'leopold.guerin@gmail.com';
+    const pdfUrl = this.props.invitationPdfUrl ?? '';
+    const s = this.state;
+    return {
+      invitationPdfHref: pdfUrl || '#',
+      invitationPdfTitle: pdfUrl ? 'Télécharger le faire-part' : 'Bientôt disponible',
+      invitationPdfStyle: pdfUrl ? '' : 'color:var(--color-accent-700);opacity:0.55;pointer-events:none',
+      lightboxDisplay: s.lightboxSrc ? 'flex' : 'none',
+      onOpenLightbox: (e) => this.openLightbox(e),
+      onCloseLightbox: () => this.closeLightbox(),
+      musicIcon: s.musicPlaying ? '❚❚' : '♪',
+      musicButtonLabel: s.musicPlaying ? 'Mettre la musique en pause' : 'Jouer une musique surprise',
+      showTooltip: s.showTooltip,
+      onToggleMusic: () => this.toggleMusic(),
+      nextButtonDisplay: s.hasStartedMusic ? 'flex' : 'none',
+      onNextTrack: () => this.nextTrack(),
+      daysRemaining: this.daysUntil('2027-08-07T15:00:00'),
+      showCountdown: this.props.showCountdown ?? true,
+      rsvpDeadline: this.props.rsvpDeadline ?? '1 juillet 2027',
+      rsvpRecipientEmail: recipient,
+      name: s.name, email: s.email, meal: s.meal, message: s.message,
+      bringingPlusOne: s.bringingPlusOne,
+      plusOneName: s.plusOneName,
+      plusOneFieldDisplay: s.bringingPlusOne ? 'block' : 'none',
+      onChangePlusOne: (e) => this.setState({ bringingPlusOne: e.target.checked }),
+      onChangePlusOneName: (e) => this.setState({ plusOneName: e.target.value }),
+      attendingSaturday: s.attending === 'Samedi uniquement',
+      attendingSunday: s.attending === 'Dimanche uniquement',
+      attendingBoth: s.attending === 'Les deux jours',
+      attendingNo: s.attending === 'Non',
+      submitted: s.submitted,
+      notSubmitted: !s.submitted,
+      onChangeName: (e) => this.setState({ name: e.target.value }),
+      onChangeEmail: (e) => this.setState({ email: e.target.value }),
+      onChangeAttending: (e) => this.setState({ attending: e.target.value }),
+      onChangeMeal: (e) => this.setState({ meal: e.target.value }),
+      onChangeMessage: (e) => this.setState({ message: e.target.value }),
+      onSubmitRsvp: (e) => {
+        e.preventDefault();
+        const bodyText = [
+          `Nom : ${s.name}`,
+          `E-mail : ${s.email}`,
+          `Présence : ${s.attending}`,
+          `Accompagné·e : ${s.bringingPlusOne ? (s.plusOneName || 'oui') : 'non'}`,
+          `Menu : ${s.meal}`,
+          `Message : ${s.message || '—'}`
+        ].join('\n');
+        const mailtoFallback = () => {
+          const mailto = `mailto:${recipient}?subject=${encodeURIComponent('RSVP - ' + s.name)}&body=${encodeURIComponent(bodyText)}`;
+          window.location.href = mailto;
+          this.setState({ submitted: true });
+        };
+        const payload = {
+          name: s.name,
+          email: s.email,
+          attending: s.attending,
+          plusOne: s.bringingPlusOne ? (s.plusOneName || 'oui') : '',
+          meal: s.meal,
+          message: s.message
+        };
+        fetch('./rsvp.php', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        }).then((res) => {
+          if (!res.ok) throw new Error('rsvp_send_failed');
+          this.setState({ submitted: true });
+        }).catch(() => {
+          // Le serveur PHP n'est pas joignable (ex : aperçu local) : on retombe
+          // sur l'ouverture du logiciel de messagerie.
+          mailtoFallback();
+        });
+      }
+    };
+  }
+}
+</script>
+</body>
+</html>
