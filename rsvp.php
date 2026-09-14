@@ -1,7 +1,10 @@
 <?php
 /**
- * Traitement du formulaire RSVP - envoie un e-mail directement au marié
- * sans passer par mailto: (qui dépend du logiciel de messagerie du visiteur).
+ * Traitement du formulaire RSVP :
+ *  1. Enregistre la réponse en base de données (source de vérité, pour export Excel/CSV)
+ *  2. Envoie un e-mail de notification via SMTP authentifié (PHPMailer), en best-effort :
+ *     si l'e-mail échoue mais que la BDD a bien enregistré la réponse, on ne fait pas
+ *     échouer la requête (la réponse n'est pas perdue).
  */
 
 header('Content-Type: application/json; charset=utf-8');
@@ -12,6 +15,28 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     echo json_encode(['ok' => false, 'error' => 'method_not_allowed']);
     exit;
 }
+
+require __DIR__ . '/vendor/PHPMailer/src/Exception.php';
+require __DIR__ . '/vendor/PHPMailer/src/PHPMailer.php';
+require __DIR__ . '/vendor/PHPMailer/src/SMTP.php';
+
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception as PHPMailerException;
+
+// Fichiers de config volontairement hors du dépôt Git (voir *.example.php)
+// ET hors du dossier public (webroot), pour ne jamais être accessibles par une URL.
+// Placement attendu sur le serveur : un dossier au-dessus de celui qui contient rsvp.php,
+// ex. si rsvp.php est dans /home/xxx/public/rsvp.php, les fichiers vont dans
+// /home/xxx/mail_config.php et /home/xxx/db_config.php
+$mailConfigPath = dirname(__DIR__) . '/mail_config.php';
+$dbConfigPath   = dirname(__DIR__) . '/db_config.php';
+
+if (!file_exists($dbConfigPath)) {
+    http_response_code(500);
+    echo json_encode(['ok' => false, 'error' => 'missing_db_config']);
+    exit;
+}
+$dbConfig = require $dbConfigPath;
 
 // Lecture du corps (JSON envoyé par le site) avec repli sur $_POST classique
 $raw = file_get_contents('php://input');
@@ -62,40 +87,98 @@ if (!empty($errors)) {
     exit;
 }
 
-// Destinataire (fixe, on ne le laisse jamais venir du formulaire)
-$to = 'leopold.guerin@gmail.com';
-$subject = 'RSVP - ' . $name;
+// 1) Enregistrement en base — c'est la partie critique : si ça échoue, on renvoie
+// une erreur pour que le site retombe sur le mailto (pour ne pas perdre la réponse).
+try {
+    $dsn = sprintf(
+        'mysql:host=%s;port=%d;dbname=%s;charset=%s',
+        $dbConfig['host'],
+        $dbConfig['port'],
+        $dbConfig['dbname'],
+        $dbConfig['charset'] ?? 'utf8mb4'
+    );
+    $pdo = new PDO($dsn, $dbConfig['username'], $dbConfig['password'], [
+        PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+    ]);
 
-$bodyLines = [
-    "Nouvelle réponse RSVP reçue depuis le site du mariage :",
-    "",
-    "Nom : " . $name,
-    "E-mail : " . $email,
-    "Présence : " . ($attending !== '' ? $attending : '—'),
-    "Accompagné·e : " . ($plusOne !== '' ? $plusOne : 'non'),
-    "Menu : " . ($meal !== '' ? $meal : '—'),
-    "Message : " . ($message !== '' ? $message : '—'),
-];
-$body = implode("\n", $bodyLines);
+    // Crée la table si elle n'existe pas encore (aucune étape manuelle nécessaire)
+    $pdo->exec(
+        'CREATE TABLE IF NOT EXISTS rsvp_responses (
+            id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+            created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+            name VARCHAR(200) NOT NULL,
+            email VARCHAR(200) NOT NULL,
+            attending VARCHAR(100) NOT NULL,
+            plus_one VARCHAR(200) NOT NULL DEFAULT \'\',
+            meal VARCHAR(100) NOT NULL DEFAULT \'\',
+            message TEXT NULL
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4'
+    );
 
-// En-têtes de l'e-mail. On envoie "From" avec un domaine du site (beaucoup
-// d'hébergeurs rejettent un From avec un domaine externe type gmail.com),
-// et on met l'adresse du répondant en "Reply-To" pour pouvoir lui répondre
-// directement depuis la boîte mail.
-$hostForFrom = $_SERVER['SERVER_NAME'] ?? 'mariage-kim-et-leo.fr';
-$fromAddress = 'rsvp@' . $hostForFrom;
-
-$headers = [];
-$headers[] = 'From: Site Mariage <' . $fromAddress . '>';
-$headers[] = 'Reply-To: ' . $name . ' <' . $email . '>';
-$headers[] = 'Content-Type: text/plain; charset=UTF-8';
-$headers[] = 'X-Mailer: PHP/' . phpversion();
-
-$success = mail($to, $subject, $body, implode("\r\n", $headers));
-
-if ($success) {
-    echo json_encode(['ok' => true]);
-} else {
+    $stmt = $pdo->prepare(
+        'INSERT INTO rsvp_responses (name, email, attending, plus_one, meal, message)
+         VALUES (:name, :email, :attending, :plus_one, :meal, :message)'
+    );
+    $stmt->execute([
+        ':name'      => $name,
+        ':email'     => $email,
+        ':attending' => $attending,
+        ':plus_one'  => $plusOne,
+        ':meal'      => $meal,
+        ':message'   => $message,
+    ]);
+} catch (PDOException $e) {
     http_response_code(500);
-    echo json_encode(['ok' => false, 'error' => 'mail_failed']);
+    echo json_encode(['ok' => false, 'error' => 'db_failed']);
+    exit;
 }
+
+// 2) Notification par e-mail — best-effort : la réponse est déjà en sécurité en base,
+// donc un échec d'envoi ne fait pas échouer la requête.
+$mailSent = false;
+if (file_exists($mailConfigPath)) {
+    $mailConfig = require $mailConfigPath;
+    $to = 'contact@mariage-kim-et-leo.fr';
+    $subject = 'RSVP - ' . $name;
+    $bodyLines = [
+        "Nouvelle réponse RSVP reçue depuis le site du mariage :",
+        "",
+        "Nom : " . $name,
+        "E-mail : " . $email,
+        "Présence : " . ($attending !== '' ? $attending : '—'),
+        "Accompagné·e : " . ($plusOne !== '' ? $plusOne : 'non'),
+        "Menu : " . ($meal !== '' ? $meal : '—'),
+        "Message : " . ($message !== '' ? $message : '—'),
+    ];
+    $body = implode("\n", $bodyLines);
+
+    $mail = new PHPMailer(true);
+    try {
+        $mail->isSMTP();
+        $mail->Host       = $mailConfig['host'];
+        $mail->Port       = $mailConfig['port'];
+        $mail->SMTPAuth   = true;
+        $mail->Username   = $mailConfig['username'];
+        $mail->Password   = $mailConfig['password'];
+        $mail->SMTPSecure = $mailConfig['encryption'] === 'ssl'
+            ? PHPMailer::ENCRYPTION_SMTPS
+            : PHPMailer::ENCRYPTION_STARTTLS;
+        $mail->CharSet    = 'UTF-8';
+
+        $mail->setFrom($mailConfig['from_email'], $mailConfig['from_name']);
+        $mail->addAddress($to);
+        $mail->addReplyTo($email, $name);
+
+        $mail->Subject = $subject;
+        $mail->Body    = $body;
+        $mail->isHTML(false);
+
+        $mail->send();
+        $mailSent = true;
+    } catch (PHPMailerException $e) {
+        // On avale l'erreur : la réponse est déjà enregistrée en base, c'est l'essentiel.
+        $mailSent = false;
+    }
+}
+
+echo json_encode(['ok' => true, 'mail_sent' => $mailSent]);

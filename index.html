@@ -30,6 +30,19 @@ html{scroll-behavior:smooth}
 #galerie figure:hover{transform:rotate(0deg) scale(1.04) !important;box-shadow:var(--shadow-lg);z-index:2}
 @media (max-width: 780px){#galerie > div{grid-template-columns:repeat(2,minmax(0,1fr)) !important}}
 
+.nav-burger{display:none;width:36px;height:36px;padding:0;border:none;background:none;cursor:pointer;align-items:center;justify-content:center;flex-direction:column;gap:5px;flex-shrink:0}
+.nav-burger .bar{display:block;width:22px;height:2px;background:currentColor;transition:transform 0.2s ease, opacity 0.2s ease}
+.nav-burger[aria-expanded="true"] .bar:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.nav-burger[aria-expanded="true"] .bar:nth-child(2){opacity:0}
+.nav-burger[aria-expanded="true"] .bar:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+@media (max-width: 780px){
+  .nav{flex-wrap:wrap}
+  .nav-burger{display:inline-flex}
+  .nav-links{display:none;flex-direction:column;align-items:stretch;gap:14px;width:100%;background:var(--color-bg);padding:16px 4px 4px;margin-top:8px;border-top:1px solid var(--color-divider)}
+  .nav-links.is-open{display:flex}
+  .nav-links .btn{width:100%;box-sizing:border-box;text-align:center}
+}
+
 @keyframes garlandSway{0%,100%{transform:rotate(-1.2deg) translateY(0px)}50%{transform:rotate(1.2deg) translateY(3px)}}
 #garland-img{transform-origin:top center;animation:garlandSway 4.5s ease-in-out infinite;transition:transform 0.4s ease}
 #garland-img:hover{animation-play-state:paused;transform:rotate(-2.5deg) translateY(8px) scale(1.015)}
@@ -61,13 +74,18 @@ image-slot::part(image){filter:saturate(0.9) brightness(1.05) contrast(0.94) sep
 <div style="position:absolute;inset:0;background:linear-gradient(180deg, transparent 0%, transparent 18%, color-mix(in srgb, var(--color-bg) 60%, transparent) 45%, var(--color-bg) 88%)"></div>
 <nav class="nav" style="background:transparent;border-bottom:none;position:absolute;top:clamp(90px,13.25vw,480px);left:0;right:0;z-index:2">
   <span class="nav-brand">Kim &amp; Léopold</span>
-  <a href="#programme">Programme</a>
-  <a href="#temoins">Témoins</a>
-  <a href="#hebergement">Hébergement</a>
-  <a href="#galerie">Galerie</a>
-  <a href="#faq">FAQ</a>
-  <a href="{{ invitationPdfHref }}" download="{{ true }}" class="btn btn-ghost" title="{{ invitationPdfTitle }}" style="{{ invitationPdfStyle }}font-family:var(--font-body);font-weight:600">Faire-part (PDF)</a>
-  <a href="#rsvp" class="btn btn-primary">RSVP</a>
+  <button type="button" class="nav-burger" id="nav-burger" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="nav-links">
+    <span class="bar"></span><span class="bar"></span><span class="bar"></span>
+  </button>
+  <div class="nav-links" id="nav-links">
+    <a href="#programme">Programme</a>
+    <a href="#temoins">Témoins</a>
+    <a href="#hebergement">Hébergement</a>
+    <a href="#galerie">Galerie</a>
+    <a href="#faq">FAQ</a>
+    <a href="{{ invitationPdfHref }}" download="{{ true }}" class="btn btn-ghost" title="{{ invitationPdfTitle }}" style="{{ invitationPdfStyle }}font-family:var(--font-body);font-weight:600">Faire-part (PDF)</a>
+    <a href="#rsvp" class="btn btn-primary">RSVP</a>
+  </div>
 </nav>
 <div style="position:relative;max-width:1200px;margin:0 auto;padding:clamp(20px,5vw,72px);min-height:78vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:16px">
   <span style="display:block;font-size:13px;letter-spacing:0.08em;text-transform:uppercase;color:var(--color-accent-700);font-feature-settings:'tnum' 1">Samedi 7 &amp; dimanche 8 août 2027</span>
@@ -120,24 +138,24 @@ image-slot::part(image){filter:saturate(0.9) brightness(1.05) contrast(0.94) sep
 
 <section id="temoins" style="background:var(--color-bg)">
 <div style="max-width:1200px;margin:0 auto;padding:clamp(48px,7vw,84px) clamp(20px,5vw,72px)">
-  <span data-reveal style="display:block;font-size:13px;letter-spacing:0.08em;text-transform:uppercase;color:var(--color-accent-700);margin-bottom:14px">Le cortège</span>
-  <h2 data-reveal style="font-size:34px;margin:0 0 32px">Témoins &amp; cortège</h2>
+  <span data-reveal style="display:block;font-size:13px;letter-spacing:0.08em;text-transform:uppercase;color:var(--color-accent-700);margin-bottom:14px">A qui se référer sur place</span>
+  <h2 data-reveal style="font-size:34px;margin:0 0 32px">Témoins</h2>
   <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:28px">
     <div data-reveal style="display:flex;flex-direction:column;align-items:center;gap:12px;text-align:center">
       <image-slot id="temoin-1" shape="circle" style="width:120px;height:120px" placeholder="Photo"></image-slot>
-      <div><h4 style="font-size:16px;margin:0 0 2px">[Prénom Nom]</h4><p style="font-size:12.5px;margin:0;color:color-mix(in srgb, var(--color-text) 60%, transparent)">Témoin de Kim</p></div>
+      <div><h4 style="font-size:16px;margin:0 0 2px">François Testu (Fifi)</h4><p style="font-size:12.5px;margin:0;color:color-mix(in srgb, var(--color-text) 60%, transparent)">Témoin de Kim</p></div>
     </div>
     <div data-reveal style="display:flex;flex-direction:column;align-items:center;gap:12px;text-align:center">
       <image-slot id="temoin-2" shape="circle" style="width:120px;height:120px" placeholder="Photo"></image-slot>
-      <div><h4 style="font-size:16px;margin:0 0 2px">[Prénom Nom]</h4><p style="font-size:12.5px;margin:0;color:color-mix(in srgb, var(--color-text) 60%, transparent)">Témoin de Kim</p></div>
+      <div><h4 style="font-size:16px;margin:0 0 2px">Alice Perrin</h4><p style="font-size:12.5px;margin:0;color:color-mix(in srgb, var(--color-text) 60%, transparent)">Témoin de Kim</p></div>
     </div>
     <div data-reveal style="display:flex;flex-direction:column;align-items:center;gap:12px;text-align:center">
       <image-slot id="temoin-3" shape="circle" style="width:120px;height:120px" placeholder="Photo"></image-slot>
-      <div><h4 style="font-size:16px;margin:0 0 2px">[Prénom Nom]</h4><p style="font-size:12.5px;margin:0;color:color-mix(in srgb, var(--color-text) 60%, transparent)">Témoin de Léopold</p></div>
+      <div><h4 style="font-size:16px;margin:0 0 2px">Pierre Maréchal</h4><p style="font-size:12.5px;margin:0;color:color-mix(in srgb, var(--color-text) 60%, transparent)">Témoin de Léopold</p></div>
     </div>
     <div data-reveal style="display:flex;flex-direction:column;align-items:center;gap:12px;text-align:center">
       <image-slot id="temoin-4" shape="circle" style="width:120px;height:120px" placeholder="Photo"></image-slot>
-      <div><h4 style="font-size:16px;margin:0 0 2px">[Prénom Nom]</h4><p style="font-size:12.5px;margin:0;color:color-mix(in srgb, var(--color-text) 60%, transparent)">Témoin de Léopold</p></div>
+      <div><h4 style="font-size:16px;margin:0 0 2px">Samuel Hamard</h4><p style="font-size:12.5px;margin:0;color:color-mix(in srgb, var(--color-text) 60%, transparent)">Témoin de Léopold</p></div>
     </div>
   </div>
   <p style="font-size:14.5px;line-height:24px;margin:32px 0 0;color:color-mix(in srgb, var(--color-text) 70%, transparent)">Le logement du Clos — l'appartement meublé situé sur le domaine du Clos de Florie — est réservé aux mariés et aux témoins. Kim &amp; Léopold s'occupent de son organisation.</p>
@@ -392,6 +410,19 @@ class Component extends DCLogic {
     };
     window.addEventListener('scroll', this._onScroll, { passive: true });
     this._onScroll();
+
+    const burger = document.getElementById('nav-burger');
+    const navLinks = document.getElementById('nav-links');
+    if (burger && navLinks) {
+      burger.addEventListener('click', () => {
+        const open = navLinks.classList.toggle('is-open');
+        burger.setAttribute('aria-expanded', open ? 'true' : 'false');
+      });
+      navLinks.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => {
+        navLinks.classList.remove('is-open');
+        burger.setAttribute('aria-expanded', 'false');
+      }));
+    }
 
     const createPlayer = () => {
       const mount = document.getElementById('yt-player');
